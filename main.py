@@ -5,15 +5,13 @@ import PySimpleGUI as sg
 PI = 3.1415
 
 def calcUnitAmp(unit, freq, amp):
-    if unit == "Acceleration":
-        print(unit)
-        ampls = [amp, amp/(2*PI*freq), amp/(2*PI*freq)**2]
-    elif unit == "Velocity":
+    ampls = [0,0,0]
+    if unit[0] == 'Acceleration':
+        ampls = [amp, amp/(2*3.14*freq), amp/(2*3.14*freq)**2]
+    elif unit[0] == 'Velocity':
         ampls = [amp*2*PI*freq, amp, amp/(2*PI*freq)]
-    elif unit == "Displacement":
+    elif unit[0] == 'Displacement':
         ampls = [amp*(2*PI*freq)**2, amp*2*PI*freq, amp]
-    else:
-        ampls = [0, 0, 0]
     return ampls
 
 input_column = [
@@ -61,45 +59,41 @@ window = sg.Window("VibAmpCalc", layout)
 
 while True:
     event, values = window.read()
-    print(values)
     if event == sg.WIN_CLOSED:
         break
 
     if event == "-FREQUENCY-":
-        freq = values["-FREQUENCY-"]
-        unit = values["-UNIT-"]
         try:
-            amp = values["-AMPLITUDE-"]
+            freq = float(values["-FREQUENCY-"])
+            unit = values["-UNIT-"]
+            amp = float(values["-AMPLITUDE-"])
             amps = calcUnitAmp(unit,freq,amp)
         except:
-            amps = [0, 0, 0]
-
+            amps = [0, 1, 0]
         window["-ACC_OUT-"].update(amps[0])
         window["-VEL_OUT-"].update(amps[1])
         window["-DIS_OUT-"].update(amps[2])
 
     if event == "-AMPLITUDE-":
-        amp = values["-AMPLITUDE-"]
-        unit = values["-UNIT-"]
         try:
-            freq = values["-FREQUENCY-"]
+            freq = float(values["-FREQUENCY-"])
+            unit = values["-UNIT-"]
+            amp = float(values["-AMPLITUDE-"])
             amps = calcUnitAmp(unit,freq,amp)
         except:
             amps = [0, 0, 0]
-
         window["-ACC_OUT-"].update(amps[0])
         window["-VEL_OUT-"].update(amps[1])
         window["-DIS_OUT-"].update(amps[2])
 
     if event == "-UNIT-":
-        unit = values["-UNIT-"]
         try:
-            freq = values["-FREQUENCY-"]
-            amp = values["-AMPLITUDE-"]
+            freq = float(values["-FREQUENCY-"])
+            unit = values["-UNIT-"]
+            amp = float(values["-AMPLITUDE-"])
             amps = calcUnitAmp(unit,freq,amp)
         except:
             amps = [0, 0, 0]
-
         window["-ACC_OUT-"].update(amps[0])
         window["-VEL_OUT-"].update(amps[1])
         window["-DIS_OUT-"].update(amps[2])
