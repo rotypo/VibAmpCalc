@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import PySimpleGUI as sg
-
-PI = 3.1415
+from numpy import pi as PI
 
 def calcUnitAmp(unit, freq, amp):
     ampls = [0,0,0]
     if unit[0] == 'Acceleration':
-        ampls = [amp, amp/(2*3.14*freq), amp/(2*3.14*freq)**2]
+        ampls = [amp, amp/(2*PI*freq), amp/(2*PI*freq)**2]
     elif unit[0] == 'Velocity':
         ampls = [amp*2*PI*freq, amp, amp/(2*PI*freq)]
     elif unit[0] == 'Displacement':
