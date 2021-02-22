@@ -58,43 +58,20 @@ window = sg.Window("VibAmpCalc", layout)
 
 while True:
     event, values = window.read()
+
+    if event == "-FREQUENCY-" or event == "-AMPLITUDE-" or event == "-UNIT-":
+        try:
+            freq = float(values["-FREQUENCY-"])
+            unit = values["-UNIT-"]
+            amp = float(values["-AMPLITUDE-"])
+            amps = calcUnitAmp(unit,freq,amp)
+        except:
+            amps = [0, 0, 0]
+        window["-ACC_OUT-"].update(amps[0])
+        window["-VEL_OUT-"].update(amps[1])
+        window["-DIS_OUT-"].update(amps[2])
+
     if event == sg.WIN_CLOSED:
         break
-
-    if event == "-FREQUENCY-":
-        try:
-            freq = float(values["-FREQUENCY-"])
-            unit = values["-UNIT-"]
-            amp = float(values["-AMPLITUDE-"])
-            amps = calcUnitAmp(unit,freq,amp)
-        except:
-            amps = [0, 1, 0]
-        window["-ACC_OUT-"].update(amps[0])
-        window["-VEL_OUT-"].update(amps[1])
-        window["-DIS_OUT-"].update(amps[2])
-
-    if event == "-AMPLITUDE-":
-        try:
-            freq = float(values["-FREQUENCY-"])
-            unit = values["-UNIT-"]
-            amp = float(values["-AMPLITUDE-"])
-            amps = calcUnitAmp(unit,freq,amp)
-        except:
-            amps = [0, 0, 0]
-        window["-ACC_OUT-"].update(amps[0])
-        window["-VEL_OUT-"].update(amps[1])
-        window["-DIS_OUT-"].update(amps[2])
-
-    if event == "-UNIT-":
-        try:
-            freq = float(values["-FREQUENCY-"])
-            unit = values["-UNIT-"]
-            amp = float(values["-AMPLITUDE-"])
-            amps = calcUnitAmp(unit,freq,amp)
-        except:
-            amps = [0, 0, 0]
-        window["-ACC_OUT-"].update(amps[0])
-        window["-VEL_OUT-"].update(amps[1])
-        window["-DIS_OUT-"].update(amps[2])
 
 window.close()
