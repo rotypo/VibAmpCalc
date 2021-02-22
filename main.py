@@ -5,51 +5,71 @@ from numpy import pi as PI
 
 def calcUnitAmp(unit, freq, amp):
     ampls = [0,0,0]
-    if unit[0] == 'Acceleration':
+    if unit == 'Acceleration':
         ampls = [amp, amp/(2*PI*freq), amp/(2*PI*freq)**2]
-    elif unit[0] == 'Velocity':
+    elif unit == 'Velocity':
         ampls = [amp*2*PI*freq, amp, amp/(2*PI*freq)]
-    elif unit[0] == 'Displacement':
+    elif unit == 'Displacement':
         ampls = [amp*(2*PI*freq)**2, amp*2*PI*freq, amp]
     return ampls
 
-input_column = [
+text_column_1 = [
     [
-        sg.Text("Frequency [Hz]"),
-        sg.In(size=(15,1), enable_events=True, key="-FREQUENCY-")
+        sg.Text("Frequency [Hz]:")
     ],
     [
-        sg.Text("Convert from: "),
-        sg.Listbox(
-            values=["Acceleration","Displacement","Velocity"],
+        sg.Text("    Convert from:")
+    ],
+    [
+        sg.Text("        Amplitude:")
+    ]
+]
+
+input_column = [
+    [
+        sg.In(size=(17,1), enable_events=True, key="-FREQUENCY-")
+    ],
+    [
+        sg.Combo(
+            ["Acceleration","Displacement","Velocity"],
             enable_events=True, size=(15,1), key="-UNIT-"
         )
     ],
     [
-        sg.Text("Amplitude: "),
-        sg.In(size=(15,1), enable_events=True, key="-AMPLITUDE-")
+        sg.In(size=(17,1), enable_events=True, key="-AMPLITUDE-")
+    ]
+]
+
+text_column_2 = [
+    [
+        sg.Text("  Acceleration:")
+    ],
+    [
+        sg.Text("        Velocity:")
+    ],
+    [
+        sg.Text("Displacement:")
     ]
 ]
 
 output_column = [
     [
-        sg.Text("Acceleration"),
         sg.Text(size=(20,1), key="-ACC_OUT-")
     ],
     [
-        sg.Text("Velocity"),
         sg.Text(size=(20,1), key="-VEL_OUT-")
     ],
     [
-        sg.Text("Displacement"),
         sg.Text(size=(20,1), key="-DIS_OUT-")
     ]
 ]
 
 layout = [
     [
+        sg.Column(text_column_1),
         sg.Column(input_column),
         sg.VSeparator(),
+        sg.Column(text_column_2),
         sg.Column(output_column)
     ]
 ]
